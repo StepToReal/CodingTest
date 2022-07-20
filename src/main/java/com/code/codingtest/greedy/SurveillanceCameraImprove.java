@@ -5,7 +5,8 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-public class SurveillanceCamera {
+public class SurveillanceCameraImprove {
+
     public static void main(String[] args) {
 //        int[][] routes = {{-20,-15},{-14,-5},{-18,-13},{-5,-3}}; //2
 //        int[][] routes = {{-20,-15},{-18,-5},{-14,-13},{-10,-3}}; //2
@@ -15,27 +16,19 @@ public class SurveillanceCamera {
         System.out.println(new SurveillanceCamera().solution(routes));
     }
 
+    //도작 시간을 기준으로 다음 route 의 시작 시간과 비교하여 카메라 위치 정의.
     public int solution(int[][] routes) {
-        Arrays.sort(routes, (a,b) -> a[1] - b[1]);
-        int cameraCount = 0;
+        Arrays.sort(routes, (a, b) -> Integer.compare(a[1], b[1]));
+        int count = 0;
+        int lastCamera = Integer.MIN_VALUE;
 
-        List<int[]> list = new ArrayList<>(Arrays.asList(routes));
-
-        while(list.size() > 0) {
-            Iterator<int[]> iterator = list.iterator();
-            int endPosition = list.get(0)[1];
-
-            while (iterator.hasNext()) {
-                int[] route = iterator.next();
-
-                if (route[0] <= endPosition && route[1] >= endPosition) {
-                    iterator.remove();
-                }
+        for (int[] route : routes) {
+            if (lastCamera < route[0]) {
+                count++;
+                lastCamera = route[1];
             }
-
-            cameraCount++;
         }
 
-        return cameraCount;
+        return count;
     }
 }
