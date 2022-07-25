@@ -9,33 +9,12 @@ public class IntegerTriangle {
     }
 
     public int solution(int[][] triangle) {
-        int sum = 0;
-        int j = 0;
-
-        for (int i = 0; i < triangle.length; i++) {
-            if (i == 0) sum += triangle[0][0];
-
-            if (i < triangle.length - 2) {
-                // 앞 두 단의 값을 읽어 최대값을 비교 해야함.
-                int a1 = triangle[i + 1][j] + triangle[i + 2][j];
-                int a2 = triangle[i + 1][j] + triangle[i + 2][j + 1];
-                int b1 = triangle[i + 1][j + 1] + triangle[i + 2][j + 1];
-                int b2 = triangle[i + 1][j + 1] + triangle[i + 2][j + 2];
-
-                int max = Math.max(Math.max(Math.max(a1, a2), b1), b2);
-
-                if (max == b1 || max == b2) {
-                    j++;
-                }
-
-                sum += triangle[i + 1][j];
-
-            } else if (i == triangle.length - 2){
-                sum += Math.max(triangle[i + 1][j], triangle[i + 1][j + 1]);
-                break;
+        for (int i = triangle.length - 1; i >= 0; i--) {
+            for (int j = 0; j < triangle[i].length - 1; j++) {
+                triangle[i - 1][j] += Math.max(triangle[i][j], triangle[i][j + 1]);
             }
         }
 
-        return sum;
+        return triangle[0][0];
     }
 }
