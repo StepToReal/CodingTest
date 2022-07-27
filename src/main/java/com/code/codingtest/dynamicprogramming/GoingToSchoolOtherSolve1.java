@@ -12,6 +12,10 @@ public class GoingToSchoolOtherSolve1 {
 
     public int solution(int m, int n, int[][] puddles) {
         //m,n 변경하지 않고도 그대로 풀 수 있을듯 하다. 일단 그렇게 접근해 보자
+        /*
+            m,n을 바꾸지 않고 풀어도 동일한 결과를 얻을 수 있다.
+            m,n을 변경하는건 예제와 동일한 그림에 행렬을 만들기 위함일 뿐, 변경하지 않아도 결과는 같다.
+         */
         int mod = 1000000007;
         int[][] map = new int[m+1][n+1];
 
