@@ -1,4 +1,4 @@
-package com.code.algorithm;
+package com.code.algorithm.dfsbfs;
 
 import java.util.ArrayList;
 

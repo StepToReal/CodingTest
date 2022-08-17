@@ -1,4 +1,4 @@
-package com.code.algorithm;
+package com.code.algorithm.dfsbfs;
 
 public class DeptFirstSearchAdjacentArr {
     public static void main(String[] args) {
