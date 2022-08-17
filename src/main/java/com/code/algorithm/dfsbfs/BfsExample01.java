@@ -4,7 +4,26 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 public class BfsExample01 {
+    public static void main(String[] args) {
+        BfsExampleGraph dg = new BfsExampleGraph(11);
 
+        dg.addEdge(1, 2);
+        dg.addEdge(1, 5);
+        dg.addEdge(1, 9);
+
+        dg.addEdge(2, 3);
+
+        dg.addEdge(3, 4);
+
+        dg.addEdge(5, 6);
+        dg.addEdge(5, 8);
+
+        dg.addEdge(6, 7);
+
+        dg.addEdge(9, 10);
+
+        dg.bfs(1);
+    }
 }
 
 class BfsExampleGraph {
@@ -20,11 +39,11 @@ class BfsExampleGraph {
         }
     }
 
-    private void addEdge(int v, int w) {
+    public void addEdge(int v, int w) {
         adj[v].add(w);
     }
 
-    private void bfs(int s) {
+    public void bfs(int s) {
         boolean[] visited = new boolean[this.v];//방문여부 확인용 변수
         LinkedList<Integer> queue = new LinkedList<>();
 

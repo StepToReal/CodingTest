@@ -4,6 +4,26 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 public class DfsExample01 {
+    public static void main(String[] args) {
+        DfsExampleGraph dg = new DfsExampleGraph(11);
+
+        dg.addEdge(1, 2);
+        dg.addEdge(1, 5);
+        dg.addEdge(1, 9);
+
+        dg.addEdge(2, 3);
+
+        dg.addEdge(3, 4);
+
+        dg.addEdge(5, 6);
+        dg.addEdge(5, 8);
+
+        dg.addEdge(6, 7);
+
+        dg.addEdge(9, 10);
+
+        dg.dfs(1);
+    }
 }
 
 class DfsExampleGraph {
@@ -20,11 +40,11 @@ class DfsExampleGraph {
         }
     }
 
-    private void addEdge(int v, int w) {
+    public void addEdge(int v, int w) {
         adj[v].add(w);
     }
 
-    private void dfs(int v) {
+    public void dfs(int v) {
         boolean visited[] = new boolean[this.v];
 
         //v를 시작하는 노드로 dfsUtil 호출
