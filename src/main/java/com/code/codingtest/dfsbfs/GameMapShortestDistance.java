@@ -1,8 +1,6 @@
 package com.code.codingtest.dfsbfs;
 
-import java.util.*;
-
-public class GameMapShortDistance {
+public class GameMapShortestDistance {
     int rowLength;
     int colLength;
 
@@ -20,7 +18,14 @@ public class GameMapShortDistance {
                        , {1, 0, 1, 0, 1}
                        , {1, 1, 1, 0, 1}};
 
-        System.out.println(new GameMapShortDistance().solution(maps2));
+        int[][] maps3 = {{1,1,0,1,1,1,1}
+                        ,{0,1,0,1,0,0,1}
+                        ,{0,1,0,1,1,0,1}
+                        ,{0,1,0,0,1,0,1}
+                        ,{0,1,0,1,1,0,1}
+                        ,{0,1,1,1,0,0,1}};
+
+        System.out.println(new GameMapShortestDistance().solution(maps3));
     }
 
     public int solution(int[][] maps) {
@@ -37,6 +42,7 @@ public class GameMapShortDistance {
         return maps[rowLength - 1][colLength - 1] == 1 ? -1 : maps[rowLength - 1][colLength - 1];
     }
 
+    //정확성은 모두 통과 했지만 효율성을 통과하지 못함
     private void dfs(int[][] maps, int row, int col) {
         if (row == rowLength - 1 && col == colLength - 1) {
             return;
@@ -52,12 +58,20 @@ public class GameMapShortDistance {
             dfs(maps, row, col + 1);
         }
 
-        if (col != 0 && col - 1 != 0 && maps[row][col - 1] != 0 && (maps[row][col - 1] == 1 || maps[row][col - 1] >= maps[row][col] + 1)) {
+        if (col != 0 && maps[row][col - 1] != 0 && (maps[row][col - 1] == 1 || maps[row][col - 1] >= maps[row][col] + 1)) {
+            if (row == 0 && col - 1 == 0) {
+                return;
+            }
+
             maps[row][col - 1] = maps[row][col] + 1;
             dfs(maps, row, col - 1);
         }
 
-        if (row != 0 && row - 1 != 0 && maps[row-1][col] != 0 && (maps[row -1][col] == 1 || maps[row - 1][col] >= maps[row][col] + 1)) {
+        if (row != 0 && maps[row-1][col] != 0 && (maps[row -1][col] == 1 || maps[row - 1][col] >= maps[row][col] + 1)) {
+            if (row - 1 == 0 && col == 0) {
+                return;
+            }
+
             maps[row - 1][col] = maps[row][col] + 1;
             dfs (maps, row - 1, col);
         }
