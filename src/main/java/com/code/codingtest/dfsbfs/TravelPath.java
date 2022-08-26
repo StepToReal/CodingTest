@@ -13,57 +13,40 @@ public class TravelPath {
         System.out.println(Arrays.toString(new TravelPath().solution(tickets)));
     }
 
-    public String[] solution(String[][] tickets) {
-        List<String> answer = new ArrayList<>();
-        String start = "ICN";
-
-        Map<String, List<String>> ticketMap = new HashMap<>();
-
-        for (String[] ticket : tickets) {
-            if (ticketMap.keySet().contains(ticket[0])) {
-                ticketMap.get(ticket[0]).add(ticket[1]);
-            } else {
-                List<String> destinationList = new ArrayList<>();
-                destinationList.add(ticket[1]);
-
-                ticketMap.put(ticket[0], destinationList);
-            }
-        }
-
-        for (Map.Entry<String, List<String>> entry : ticketMap.entrySet()) {
-            Collections.sort(entry.getValue());
-        }
-
-        for (Map.Entry<String, List<String>> entry : ticketMap.entrySet()) {
-            for (int i = 0; i < entry.getValue().size(); i++) {
-                List<String> nextDestinationList = ticketMap.get(entry.getValue().get(i));
-
-                if (nextDestinationList.contains(entry.getKey())) {
-
-                }
-            }
-        }
-
-        dfs(start, ticketMap, answer);
-
-        return answer.toArray(new String[0]);
+    private static void printA(int a) {
+        System.out.println(a);
     }
 
-    private void dfs(String start, Map<String, List<String>> ticketMap, List<String> answer) {
-        answer.add(start);
+    boolean[] visited;
+    ArrayList<String> allRoute;
 
-        if (!ticketMap.containsKey(start)) {
+    public String[] solution(String[][] tickets) {
+        String[] answer = {};
+        int cnt = 0;
+        visited = new boolean[tickets.length];
+        allRoute = new ArrayList<>();
+
+        dfs("ICN", "ICN", tickets, cnt);
+
+        Collections.sort(allRoute);
+        answer = allRoute.get(0).split(" ");
+
+        return answer;
+    }
+
+    private void dfs(String start, String route, String[][] tickets, int cnt) {
+        if (cnt == tickets.length) {
+            allRoute.add(route);
             return;
         }
 
-        List<String> destinations = ticketMap.get(start);
-
-        for (int i = 0; i < destinations.size(); i++) {
-            String destination = destinations.get(i);
-
-            if (!destination.equals("000")) {
-                destinations.set(i, "000");
-                dfs(destination, ticketMap, answer);
+        for (int i = 0; i < tickets.length; i++) {
+            if (start.equals(tickets[i][0]) && !visited[i]) {
+                visited[i] = true;
+                dfs(tickets[i][1], route + " " + tickets[i][1], tickets, cnt+1); //++c 를 하면 안됨
+                                                                                // ++c는 변수값이 호출한 재귀 함수에서도 증가함.
+                                                                                // c+1는 호출된 다음 함수에서만 값이 증가하고 현재 재귀함수에서는 증가하지 않음.
+                visited[i] = false;
             }
         }
     }
