@@ -1,22 +1,45 @@
 package com.code.codingtest.dfsbfs;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public class FillThePuzzlePieces {
     int[][] move = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
 
+    //블럭 뽑아 오는건 문제 없음. 제대로 매칭이 안되는 문제가 있음.
     public static void main(String[] args) {
-        int[][] game_board = {{1,1,0,0,1,0},{0,0,1,0,1,0},{0,1,1,0,0,1},{1,1,0,1,1,1},{1,0,0,0,1,0},{0,1,1,1,0,0}};
-        int[][] table = {{1,0,0,1,1,0},{1,0,1,0,1,0},{0,1,1,0,1,1},{0,0,1,0,0,0},{1,1,0,1,1,0},{0,1,0,0,0,0}};
+//        int[][] game_board = {{1,1,0,0,1,0},{0,0,1,0,1,0},{0,1,1,0,0,1},{1,1,0,1,1,1},{1,0,0,0,1,0},{0,1,1,1,0,0}};
+//        int[][] table = {{1,0,0,1,1,0},{1,0,1,0,1,0},{0,1,1,0,1,1},{0,0,1,0,0,0},{1,1,0,1,1,0},{0,1,0,0,0,0}};
+
+        int[][] game_board = {{0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0}
+                            , {1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0}
+                            , {0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0}
+                            , {1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1}
+                            , {0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0}
+                            , {0, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1}
+                            , {0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0}
+                            , {0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0}
+                            , {1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0}
+                            , {0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0}
+                            , {0, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 1}
+                            , {0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0}};
+        int[][] table = {{1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1}
+                       , {1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1}
+                       , {1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0}
+                       , {0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0}
+                       , {1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0}
+                       , {1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0}
+                       , {1, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1}
+                       , {1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1}
+                       , {0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1}
+                       , {1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1}
+                       , {1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 0, 1}
+                       , {1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 1}};
 
         System.out.println(new FillThePuzzlePieces().solution(game_board, table));
     }
 
     public int solution(int[][] game_board, int[][] table) {
-        int answer = -1;
+        int answer = 0;
 
         //game board 에서 빈칸 찾기
         List<int[][]> boardEmptySpace = getSpace(game_board, 0);
@@ -25,24 +48,84 @@ public class FillThePuzzlePieces {
         List<int[][]> tableFillSpace = getSpace(table, 1);
 
         //board 빈칸들에 table item 회전하며 대입시키기
+        for (int[][] tableSpace : tableFillSpace) {
+            for (int i = boardEmptySpace.size() - 1; i >= 0; i--) {
+                int[][]boardSpace = boardEmptySpace.get(i);
+
+                if (tableSpace.length != boardSpace.length) continue;
+
+                if (isMatchPuzzle(tableSpace, boardSpace)){
+                    answer += getFillCount(tableSpace);
+                    boardEmptySpace.remove(boardSpace);
+                    break;
+                }
+            }
+        }
 
         return answer;
     }
 
+    private boolean isMatchPuzzle(int[][] tableSpace, int[][] boardSpace) {
+        for (int i = 0; i < 4; i++) {
+            if (Objects.deepEquals(boardSpace, rotate(tableSpace))) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private int[][] rotate(int[][] matrix) {
+        int n = matrix.length;
+
+        for (int i = 0; i < n / 2; i++) {
+            for (int j = 0; j < n; j++) {
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[n - i - 1][j];
+                matrix[n - i - 1][j] = temp;
+            }
+        }
+
+        for (int i = 0; i < n; i++) {
+            for (int j = i; j < n; j++) {
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = temp;
+            }
+        }
+
+        return matrix;
+    }
+
+    private int getFillCount(int[][] tableSpace) {
+        int cnt = 0;
+
+        for (int i = 0; i < tableSpace.length; i++) {
+            for (int j = 0; j < tableSpace[0].length; j++) {
+                if (tableSpace[i][j] == 1) {
+                    cnt++;
+                }
+            }
+        }
+
+        return cnt;
+    }
+
     private List<int[][]> getSpace(int[][] board, int num) {
         List<int[][]> resultList = new ArrayList<>();
+        List<List<int[]>> puzzleCoordsList = new ArrayList<>();
         Queue<int[]> queue = new LinkedList<>();
 
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
                 if (board[i][j] == num) {
                     board[i][j] = -1;
-                    int[][] puzzle = new int[board.length][board.length];
+                    List<int[]> puzzleCoords = new ArrayList<>();
                     queue.add(new int[]{i, j});
 
                     while (!queue.isEmpty()) {
                         int[] coord = queue.poll();
-                        puzzle[coord[0]][coord[1]] = 1;
+                        puzzleCoords.add(coord);
 
                         for (int k = 0; k < move.length; k++) {
                             if (coord[0] + move[k][0] >= board.length || coord[0] + move[k][0] < 0 ||
@@ -59,10 +142,27 @@ public class FillThePuzzlePieces {
                             }
                         }
                     }
-
-                    resultList.add(puzzle);
+                    puzzleCoordsList.add(puzzleCoords);
                 }
             }
+        }
+
+        //puzzleCoordList를 행렬로 변형
+        for (List<int[]> puzzleCoords : puzzleCoordsList) {
+            int xMin = puzzleCoords.stream().min(Comparator.comparingInt(o -> o[0])).get()[0];
+            int yMin = puzzleCoords.stream().min(Comparator.comparingInt(o -> o[1])).get()[1];
+            int xMax = puzzleCoords.stream().max(Comparator.comparingInt(o -> o[0])).get()[0];
+            int yMax = puzzleCoords.stream().max(Comparator.comparingInt(o -> o[1])).get()[1];
+
+            int m = Integer.max(xMax - xMin + 1, yMax - yMin + 1);
+
+            int[][] puzzleArr = new int[m][m];
+
+            for (int[] puzzleCoord : puzzleCoords) {
+                puzzleArr[puzzleCoord[0] - xMin][puzzleCoord[1] - yMin] = 1;
+            }
+
+            resultList.add(puzzleArr);
         }
 
         return resultList;
