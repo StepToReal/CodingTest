@@ -49,11 +49,7 @@ public class FillThePuzzlePieces {
 
         //board 빈칸들에 table item 회전하며 대입시키기
         for (int[][] tableSpace : tableFillSpace) {
-            for (int i = boardEmptySpace.size() - 1; i >= 0; i--) {
-                int[][]boardSpace = boardEmptySpace.get(i);
-
-                if (tableSpace.length != boardSpace.length) continue;
-
+            for (int[][] boardSpace : boardEmptySpace) {
                 if (isMatchPuzzle(tableSpace, boardSpace)){
                     answer += getFillCount(tableSpace);
                     boardEmptySpace.remove(boardSpace);
@@ -67,7 +63,9 @@ public class FillThePuzzlePieces {
 
     private boolean isMatchPuzzle(int[][] tableSpace, int[][] boardSpace) {
         for (int i = 0; i < 4; i++) {
-            if (Objects.deepEquals(boardSpace, rotate(tableSpace))) {
+            tableSpace = rotate(tableSpace);
+
+            if (Objects.deepEquals(boardSpace, tableSpace)) {
                 return true;
             }
         }
@@ -77,24 +75,17 @@ public class FillThePuzzlePieces {
 
     private int[][] rotate(int[][] matrix) {
         int n = matrix.length;
+        int m = matrix[0].length;
 
-        for (int i = 0; i < n / 2; i++) {
+        int[][] rotate = new int[m][n];
+
+        for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                int temp = matrix[i][j];
-                matrix[i][j] = matrix[n - i - 1][j];
-                matrix[n - i - 1][j] = temp;
+                rotate[i][j] = matrix[n - 1 - j][i];
             }
         }
 
-        for (int i = 0; i < n; i++) {
-            for (int j = i; j < n; j++) {
-                int temp = matrix[i][j];
-                matrix[i][j] = matrix[j][i];
-                matrix[j][i] = temp;
-            }
-        }
-
-        return matrix;
+        return rotate;
     }
 
     private int getFillCount(int[][] tableSpace) {
@@ -154,9 +145,7 @@ public class FillThePuzzlePieces {
             int xMax = puzzleCoords.stream().max(Comparator.comparingInt(o -> o[0])).get()[0];
             int yMax = puzzleCoords.stream().max(Comparator.comparingInt(o -> o[1])).get()[1];
 
-            int m = Integer.max(xMax - xMin + 1, yMax - yMin + 1);
-
-            int[][] puzzleArr = new int[m][m];
+            int[][] puzzleArr = new int[xMax - xMin + 1][yMax - yMin + 1];
 
             for (int[] puzzleCoord : puzzleCoords) {
                 puzzleArr[puzzleCoord[0] - xMin][puzzleCoord[1] - yMin] = 1;
