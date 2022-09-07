@@ -2,7 +2,7 @@ package com.code.codingtest.graph;
 
 import java.util.*;
 
-public class farthestNode {
+public class FarthestNode {
     public static void main(String[] args) {
 //        int n = 6;
 //        int[][] edge = {{3, 6}, {4, 3}, {3, 2}, {1, 3}, {1, 2}, {2, 4}, {5, 2}};
@@ -10,14 +10,14 @@ public class farthestNode {
         int n = 6;
         int[][] edge = {{1,2}, {5,1},{2,4},{4,6},{2,5},{3,5}};
 
-        System.out.println(new farthestNode().solution(n, edge));
+        System.out.println(new FarthestNode().solution(n, edge));
     }
 
     public int solution(int n, int[][] edge) {
         Graph graph = new Graph(n);
 
         for (int[] edgeItem : edge) {
-            graph.addEdge(edgeItem[0], edgeItem[1]);
+            graph.addEdge(edgeItem);
         }
 
         graph.bfs();
@@ -27,49 +27,49 @@ public class farthestNode {
 }
 
 class Graph {
-    private LinkedList<int[]>[] adjustNodes;
+    private ArrayList<ArrayList<Integer>> adjustNodes;
     private int totalNodeNum;
     private int[] lengthArr;
+    private int[] prevIndexArr;
     private boolean[] visited;
 
     Graph(int totalNodeNum) {
         this.totalNodeNum = totalNodeNum + 1;
-        adjustNodes = new LinkedList[this.totalNodeNum];
+        adjustNodes = new ArrayList<>();
         lengthArr = new int[this.totalNodeNum];
+        prevIndexArr = new int[this.totalNodeNum];
         visited = new boolean[this.totalNodeNum];
 
         for (int i = 0; i < this.totalNodeNum; i++) {
-            adjustNodes[i] = new LinkedList<>();
+            adjustNodes.add(new ArrayList<>());
         }
     }
 
-    public void addEdge(int node, int linkedNode) {
-        adjustNodes[node].add(new int[] {linkedNode, 0});
-        adjustNodes[linkedNode].add(new int[] {node, 0});
+    public void addEdge(int[] edge) {
+        adjustNodes.get(edge[0]).add(edge[1]);
+        adjustNodes.get(edge[1]).add(edge[0]);
     }
 
     public void bfs() {
-        Queue<int[]> queue = new LinkedList<>();
+        Queue<Integer> queue = new LinkedList<>();
 
-        visited[1] = true;
-        for (int[] nodeNum : adjustNodes[1]) {
-            queue.add(new int[] {nodeNum[0], 1});
-            visited[nodeNum[0]] = true;
+        for (int adjustNode : adjustNodes.get(1)) {
+            queue.add(adjustNode);
+            prevIndexArr[adjustNode] = 1;
         }
+        visited[1] = true;
 
         while (!queue.isEmpty()) {
-            int[] nodeArr = queue.poll();
-            int nodeNum = nodeArr[0];
-            int length = nodeArr[1];
+            int nodeNum = queue.poll();
+            int prevIndex = prevIndexArr[nodeNum];
 
             visited[nodeNum] = true;
-            lengthArr[nodeNum] = length;
+            lengthArr[nodeNum] = lengthArr[prevIndex] + 1;
 
-            for (int[] linkedNode : adjustNodes[nodeNum]) {
-                int linkedNodeNum = linkedNode[0];
-
-                if (!visited[linkedNodeNum]) {
-                    queue.add(new int[] {linkedNodeNum, length + 1});
+            for (int adjustNode : adjustNodes.get(nodeNum)) {
+                if (!visited[adjustNode] && prevIndexArr[adjustNode] == 0) {
+                    queue.add(adjustNode);
+                    prevIndexArr[adjustNode] = nodeNum; //
                 }
             }
         }
