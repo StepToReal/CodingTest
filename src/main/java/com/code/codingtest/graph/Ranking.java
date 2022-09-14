@@ -15,6 +15,8 @@ public class Ranking {
 
     boolean[] visited;
 
+    //https://jehwanyoo.net/2022/02/08/%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%A8%B8%EC%8A%A4-%EC%88%9C%EC%9C%84/
+    // 처리 방식은 맞는데 중복코드를 제거해야 하고, 성능을 개선 해야 함 (메모리 부족 실패 떳음)
     public int solution(int n, int[][] results) {
         int answer = 0;
 
