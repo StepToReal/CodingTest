@@ -1,4 +1,4 @@
-package com.code.codingtest.skillcheck2;
+package com.code.codingtest.skillcheck.level2;
 
 import java.util.*;
 
