@@ -6,6 +6,12 @@ import java.util.Comparator;
 import java.util.List;
 
 public class Problem02 {
+    /*
+    순서가 보장된 튜플이 있음. 튜플을 나눈 배열이 주어질때 전체 튜플을 출력하기
+    튜플을 나눈 배열은 순서 보장이 안되어 있음.
+
+    ex> {3,2,4,1} = {{3}, {2,3}, {4,3,2}, {1,4,2,3}}
+     */
     public static void main(String[] args) {
         String s = "{{1,2,3},{2,1},{1,2,4,3},{2}}";
 
@@ -13,51 +19,30 @@ public class Problem02 {
     }
 
     public int[] solution(String s) {
-        List<List<Integer>> list = new ArrayList<>();
-        List<Integer> answerList = new ArrayList<>();
-        int[] answer;
-        s = s.substring(1, s.length() - 1);
-        String[] sArr = s.split("}");
+        List<String[]> list = new ArrayList<>();
+        List<Integer> answer = new ArrayList<>();
 
-        for (int i = 0; i < sArr.length; i++) {
-            sArr[i] = sArr[i].replaceAll("\\{","");
+        String[] arr = s.split("},");
+
+        for (String a : arr) {
+            a = a.replaceAll("\\{","").replaceAll("}", "");
+            String[] innerArr = a.split(",");
+
+            list.add(innerArr);
         }
 
-        for (String s1 : sArr) {
-            String[] s1Arr = s1.split(",");
-            List<Integer> innerList = new ArrayList<>();
+        list.sort(Comparator.comparingInt(o -> o.length));
 
-            for (int i = 0; i < s1Arr.length; i++) {
-                if (!s1Arr[i].isEmpty()) {
-                    int value = Integer.parseInt(s1Arr[i]);
-                    innerList.add(value);
-                }
-            }
+        for (String[] innerArr : list) {
+            for (String a : innerArr) {
+                int value = Integer.parseInt(a);
 
-            list.add(innerList);
-        }
-
-        list.sort(new Comparator<List<Integer>>() {
-            @Override
-            public int compare(List<Integer> o1, List<Integer> o2) {
-                return o1.size() - o2.size();
-            }
-        });
-
-        for (List<Integer> innerList : list) {
-            for (int value : innerList) {
-                if (!answerList.contains(value)) {
-                    answerList.add(value);
+                if (!answer.contains(value)) {
+                    answer.add(value);
                 }
             }
         }
 
-        answer = new int[answerList.size()];
-
-        for (int i = 0; i < answer.length; i++) {
-            answer[i] = answerList.get(i);
-        }
-
-        return answer;
+        return answer.stream().mapToInt(i -> i).toArray();
     }
 }
