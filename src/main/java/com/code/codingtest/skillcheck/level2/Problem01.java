@@ -36,27 +36,26 @@ public class Problem01 {
         answer = new int[periods.length];
         int answerIndex = 0;
 
-        outerLoop: {
-            for (int i = 0; i < periods.length - 1; i++) {
-                int base = periods[i];
+        outerLoop:
+        for (int i = 0; i < periods.length - 1; i++) {
+            int base = periods[i];
 
-                for (int j = i + 1; j < periods.length; j++) {
-                    int target = periods[j];
+            for (int j = i + 1; j < periods.length; j++) {
+                int target = periods[j];
 
-                    if (base < target) {
-                        answer[answerIndex++] = j - i;
+                if (base < target) {
+                    answer[answerIndex++] = j - i;
 
-                        if (j == periods.length - 1) {
-                            answer[answerIndex++] = 1;
-                            break outerLoop;
-                        } else {
-                            i = j - 1;
-                            break;
-                        }
-                    } else if (j == periods.length - 1) {
-                        answer[answerIndex++] = j - i + 1;
+                    if (j == periods.length - 1) {
+                        answer[answerIndex++] = 1;
                         break outerLoop;
+                    } else {
+                        i = j - 1;
+                        break;
                     }
+                } else if (j == periods.length - 1) {
+                    answer[answerIndex++] = j - i + 1;
+                    break outerLoop;
                 }
             }
         }
