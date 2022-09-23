@@ -22,7 +22,6 @@ public class Problem01 {
     }
 
     private int[] solution(int[] progresses, int[] speeds) {
-        List<Integer> answerList = new ArrayList<>();
         int[] answer;
         int[] periods = new int[progresses.length];
 
@@ -33,10 +32,6 @@ public class Problem01 {
                 periods[i] = ((100 - progresses[i]) / speeds[i]) + 1;
             }
         }
-
-        // {5, 10, 1, 1, 20, 1}
-        // {5, 10, 1, 1, 20, 100}
-        periods = new int[] {5, 10, 1, 1, 20, 1, 10};
 
         answer = new int[periods.length];
         int answerIndex = 0;
