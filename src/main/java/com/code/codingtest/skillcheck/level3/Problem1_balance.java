@@ -4,43 +4,25 @@ import java.util.Arrays;
 
 public class Problem1_balance {
     public static void main(String[] args) {
-        int n = 5;
+        int n = 9;
         int[] money = {1, 2, 3, 4, 5};
 
         System.out.println(new Problem1_balance().solution(n, money));
     }
-    int answer = 0;
 
     public int solution(int n, int[] money) {
         Arrays.sort(money);
+        int[] dp = new int[n + 1];
+        dp[0] = 1;
 
-        int[] count = new int[money.length];
-
-        for (int i = 0; i < money.length; i++) {
-            count[i] = n / money[i];
-        }
-
-        for (int i = 0; i < money.length; i++) {
-            dfs(n, i, money, count);
-        }
-
-        return answer % 1_000_000_007;
-    }
-
-    private void dfs(int n, int moneyType, int[] money, int[] count) {
-        for (int index = 1; index <= count[moneyType]; index++) {
-            int m = n - money[moneyType] * index;
-
-            if (m > 0) {
-                for (int i = moneyType + 1; i < money.length; i++) {
-                    dfs(m, i, money, count);
+        for (int m = 0; m < money.length; m++) {
+            for (int i = 1; i <= n; i++) {
+                if (money[m] <= i) {
+                    dp[i] += (dp[i - money[m]] % 1_000_000_007);
                 }
-            } else if (m == 0) {
-                answer = answer % 1_000_000_007 + 1;
-                break;
-            } else {
-                break;
             }
         }
+
+        return dp[dp.length - 1];
     }
 }
