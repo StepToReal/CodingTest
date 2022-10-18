@@ -14,7 +14,6 @@ public class BadUser2 {
         System.out.println(new BadUser2().solution(userId, bannedId));
     }
 
-    // 답이 틀림 개선이 필요함
     public int solution(String[] user_id, String[] banned_id) {
         Map<String, Set<String>> badUsersMap = new HashMap();
 
@@ -41,16 +40,17 @@ public class BadUser2 {
             }
         }
 
-        return backtracking(banned_id, badUsersMap, 0, new HashSet<String>());
+        backtracking(banned_id, badUsersMap, 0, new HashSet<String>());
 
-
+        return resultSet.size();
     }
 
-    private int backtracking(String[] banned_id, Map<String, Set<String>> badUsersMap, int i, HashSet<String> set) {
-        int result = 0;
+    Set<Set<String>> resultSet = new HashSet<>();
 
+    private void backtracking(String[] banned_id, Map<String, Set<String>> badUsersMap, int i, HashSet<String> set) {
         if (i == banned_id.length) {
-            return 1;
+            resultSet.add(new HashSet<>(set));
+            return;
         }
 
         Set<String> badUsersSet = badUsersMap.get(banned_id[i]);
@@ -62,11 +62,9 @@ public class BadUser2 {
 
             if (!set.contains(badUser)) {
                 set.add(badUser);
-                result += backtracking(banned_id, badUsersMap, i + 1, set);
+                backtracking(banned_id, badUsersMap, i + 1, set);
                 set.remove(badUser);
             }
         }
-
-        return result;
     }
 }
