@@ -1,11 +1,8 @@
 package com.code.codingtest.skillcheck.level3;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
-public class StampingStone2 {
+public class SteppingStone2 {
     public static void main(String[] args) {
 //        int[] stones = {2, 4, 5, 3, 2, 1, 4, 2, 5, 1};
 //        int k = 3;
@@ -16,7 +13,7 @@ public class StampingStone2 {
 //        int[] stones = {5,5,5,5};
 //        int k = 2;
 
-        System.out.println(new StampingStone2().solution(stones, k));
+        System.out.println(new SteppingStone2().solution(stones, k));
     }
 
     public int solution(int[] stones, int k) {

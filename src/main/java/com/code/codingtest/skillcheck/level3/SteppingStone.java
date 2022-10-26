@@ -3,12 +3,15 @@ package com.code.codingtest.skillcheck.level3;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StampingStone {
+public class SteppingStone {
     public static void main(String[] args) {
-        int[] stones = {2, 4, 5, 3, 2, 1, 4, 2, 5, 1};
-        int k = 3;
+//        int[] stones = {2, 4, 5, 3, 2, 1, 4, 2, 5, 1};
+//        int k = 3;
 
-        System.out.println(new StampingStone().solution(stones, k));
+        int[] stones = {5,4,9,10,8,3,2};
+        int k = 2;
+
+        System.out.println(new SteppingStone().solution(stones, k));
     }
 
     // 정확성은 모두 통과, 효율성은 통과 못함 개선 필요

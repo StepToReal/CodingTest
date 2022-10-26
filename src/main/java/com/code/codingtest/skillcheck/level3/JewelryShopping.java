@@ -1,10 +1,8 @@
 package com.code.codingtest.skillcheck.level3;
 
-import com.sun.xml.internal.bind.v2.runtime.reflect.Accessor;
-import com.sun.xml.internal.ws.resources.AddressingMessages;
-
-import java.awt.dnd.DropTargetListener;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class JewelryShopping {
     public static void main(String[] args) {

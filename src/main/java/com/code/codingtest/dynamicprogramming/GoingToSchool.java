@@ -1,10 +1,5 @@
 package com.code.codingtest.dynamicprogramming;
 
-import com.sun.xml.internal.bind.v2.runtime.output.StAXExStreamWriterOutput;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class GoingToSchool {
     public static void main(String[] args) {
         int width = 7;

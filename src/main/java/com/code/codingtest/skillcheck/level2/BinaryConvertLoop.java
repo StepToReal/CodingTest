@@ -1,7 +1,5 @@
 package com.code.codingtest.skillcheck.level2;
 
-import sun.security.util.Length;
-
 import java.util.Arrays;
 
 public class BinaryConvertLoop {

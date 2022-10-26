@@ -1,8 +1,5 @@
 package com.code.codingtest.skillcheck.level3;
 
-import com.code.codingtest.skillcheck.level1.NumberCouple;
-import com.sun.org.apache.xml.internal.security.algorithms.implementations.IntegrityHmac;
-
 import java.util.Arrays;
 import java.util.PriorityQueue;
 import java.util.stream.Collectors;

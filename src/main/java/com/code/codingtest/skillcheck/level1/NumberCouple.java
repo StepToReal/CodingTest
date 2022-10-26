@@ -1,10 +1,7 @@
 package com.code.codingtest.skillcheck.level1;
 
-import com.sun.org.apache.xml.internal.utils.XMLChar;
-
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 
 public class NumberCouple {

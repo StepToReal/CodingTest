@@ -1,7 +1,5 @@
 package com.code.codingtest.skillcheck.level3;
 
-import com.sun.xml.internal.bind.v2.runtime.reflect.Accessor;
-
 import java.util.*;
 
 public class JewelryShopping2 {

@@ -1,8 +1,9 @@
 package com.code.codingtest.skillcheck.level3;
 
-import sun.misc.SoftCache;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 public class BadUser {
