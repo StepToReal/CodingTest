@@ -1,7 +1,5 @@
 package com.code.codingtest.skillcheck.level2;
 
-import com.sun.media.sound.SoftTuning;
-
 public class ExpressNumber {
     public static void main(String[] args) {
         int n = 15;

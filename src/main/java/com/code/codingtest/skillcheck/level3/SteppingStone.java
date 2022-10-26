@@ -11,6 +11,9 @@ public class SteppingStone {
         int[] stones = {5,4,9,10,8,3,2};
         int k = 2;
 
+//        int[] stones = {5,5,5,5};
+//        int k = 2;
+
         System.out.println(new SteppingStone().solution(stones, k));
     }
 

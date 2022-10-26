@@ -20,41 +20,38 @@ public class SteppingStone2 {
         int answer = 0;
 
         int min = 0;
-        int mid = 0;
         int max = Arrays.stream(stones).max().getAsInt();
 
         while (min <= max) {
-            mid = (min + max) / 2;
+            int mid = (min + max) / 2;
 
-            int consecutiveZero = 0;
-            int zeroNum = 0;
-
-            for (int stone : stones) {
-                stone -= mid;
-
-                if (stone < 0) {
-                    zeroNum++;
-                } else {
-                    zeroNum = 0;
-                }
-
-                if (zeroNum > k) {
-
-                }
-            }
-
-//            if (isPrevZero) consecutiveZero = Math.max(zeroNum, consecutiveZero);
-
-            if (consecutiveZero == k) {
+            if (isCross(mid, stones, k)) {
                 answer = Math.max(answer, mid);
                 min = mid + 1;
-            } else if (consecutiveZero < k ) {
-                min = mid + 1;
-            } else { // (consecutiveZero > k )
+            } else {
                 max = mid - 1;
             }
         }
 
         return answer;
+    }
+
+    private boolean isCross(int mid, int[] stones, int k) {
+        int zeroCount = 0;
+
+        for (int stone : stones) {
+            stone -= mid;
+            if (stone < 0) {
+                zeroCount++;
+            } else {
+                zeroCount = 0;
+            }
+
+            if (zeroCount >= k) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
