@@ -1,38 +1,36 @@
 package com.code.codingtest.skillcheck.level2;
 
+import com.sun.java.accessibility.util.GUIInitializedListener;
+
 import java.lang.reflect.Array;
 import java.util.*;
+import java.util.function.IntFunction;
 import java.util.stream.Collectors;
 
 public class Tuple {
     public static void main(String[] args) {
-        String s = "{{4,2,3},{3},{2,3,4,1},{2,3}}";
+        String s = "{{1,2,3},{2,1},{1,2,4,3},{2}}";
         System.out.println(Arrays.toString(new Tuple().solution(s)));
     }
 
     public int[] solution(String s) {
-        List<List<Integer>> list = new ArrayList<>();
-
-        String[] sElement = s.split("},");
-        int[] answer = new int[sElement.length];
-
-        for (String s1 : sElement) {
-            s1 = s1.replace("{","").replace("}","");
-            List<Integer> intList = Arrays.stream(s1.split(",")).map(Integer::parseInt).collect(Collectors.toList());
-            list.add(intList);
-        }
-
-        list.sort(Comparator.comparingInt(List::size));
+        s = s.substring(1, s.length() - 1);
+        List<String[]> sElement = Arrays.stream(s.split("(},)"))
+                .map(o -> o.replaceAll("[{}]", "").split(","))
+                .collect(Collectors.toList());
+        int[] answer = new int[sElement.size()];
         Set<Integer> useNum = new HashSet<>();
+        int index = 0;
+        sElement.sort(Comparator.comparingInt(o -> o.length));
 
-        answer[0] = list.get(0).get(0);
-        useNum.add(list.get(0).get(0));
+        for (String[] s1 : sElement) {
+            List<Integer> intList = Arrays.stream(s1).map(Integer::parseInt).collect(Collectors.toList());
 
-        for (int i = 1; i < list.size(); i++) {
-            List<Integer> tuple = list.get(i);
-            tuple.removeAll(useNum);
-            answer[i] = tuple.get(0);
-            useNum.add(tuple.get(0));
+            if (!useNum.isEmpty()) {
+                intList.removeAll(useNum);
+            }
+            answer[index++] = intList.get(0);
+            useNum.addAll(intList);
         }
 
         return answer;
