@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
-public class BackTracking03 {
+public class NM_02 {
 
     static int n, m;
     static int[] tempArr;

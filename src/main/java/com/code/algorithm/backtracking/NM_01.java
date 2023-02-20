@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class BackTracking02 {
+public class NM_01 {
     static int n, m;
     static boolean[] visited;
     static int[] tempArr;
