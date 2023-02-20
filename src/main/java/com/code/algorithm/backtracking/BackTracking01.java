@@ -1,9 +1,8 @@
-package com.code.algorithm;
+package com.code.algorithm.backtracking;
 
-public class BackTracking {
+public class BackTracking01 {
     private static boolean[] visited;
     private static StringBuilder sb = new StringBuilder();
-
     private static final String NEW_LINE = "\n";
     private static final String SPACE = " ";
 
